@@ -262,9 +262,24 @@ class Sales extends MY_Controller  {
 		}
 		else
 		{
-			$this->sales_model->insert();		
-			$this->session->set_flashdata('msg','Successfully Insert Sales Bill !');
-			return redirect('sales/create');
+
+			$this->sales_model->insert();
+
+			$query = $this->db->query("Select grand_total from sales_grandtotal order by grand_id desc limit 1 ");
+        	$total_pagar=$query->row_array();
+        	
+
+        	$data['pagar']=$total_pagar['grand_total'];
+
+			$this->load->view('admin/sales/pay_methode',$data);
+
+			
+
+
+			
+
+			//$this->session->set_flashdata('msg','Successfully Insert Sales Bill !');			
+			//return redirect('sales/create');
 		}
 	}
 	
